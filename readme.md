@@ -29,10 +29,10 @@ print(t:get('user', 'password')) --> 1111
 Overlay tables can be accessed with any Lua value. There are no magic or
 reserved keys.
 
-When indexing operations may fail, whether by errors in an `__index` metamethod,
-or when different levels may return non-indexable items, the function will fail.
-To instead skip to the next layer, use the `pget` (protected get) method
-instead.
+When indexing operations fails, whether by errors in an `__index` metamethod,
+or an intermediary result cannot be indexed, `get` will also fail.
+To ignore errors while indexing and instead just try the next table, use the
+`pget` function instead.
 Note that this may conceal errors that you might want to fix.
 
 ```lua
@@ -48,5 +48,5 @@ The `xpget` function allows passing an error handler as the first argument that
 will be called for any errors before continuing through the stack.
 
 ```lua
-print(config:xpget(log.warn, 'difficult', 'value')) -> >:3
+print(config:xpget(log.warn, 'difficult', 'value')) --> >:3
 ```
